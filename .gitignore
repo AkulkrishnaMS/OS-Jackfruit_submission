@@ -1,0 +1,21 @@
+# Compiled binaries and object files
+*.o
+*.ko
+*.mod
+*.mod.c
+*.symvers
+*.order
+engine
+memory_hog
+cpu_hog
+io_pulse
+
+# Root filesystems and downloads
+rootfs-*/
+rootfs-base/
+*.tar.gz
+
+# Logs and Sockets
+*.sock
+*.log
+logs/
