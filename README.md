@@ -142,7 +142,7 @@ sudo ./engine start low_prio ./rootfs-lo 10 "/cpu_hog 60"
 sudo ./engine stop alpha
 sudo ./engine stop beta
 
-`# Stop previous experiment containers
+# Stop previous experiment containers
 sudo ./engine stop high_prio
 sudo ./engine stop low_prio
 
@@ -183,7 +183,7 @@ ps aux | grep "engine daemon" | grep -v grep
 sudo rmmod monitor
 
 # Confirm clean kernel module exit
-dmesg | tail -5
+sudo dmesg | tail -5
 
 # Clean up log files and socket
 sudo rm -f /tmp/jackfruit_*.log
