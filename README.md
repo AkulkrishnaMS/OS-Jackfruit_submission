@@ -239,7 +239,7 @@ make clean
 ### Screenshot 3 — Bounded-buffer logging
 
 ![Logging pipeline output](screenshots/3.png)
-(screenshots/3-2.png)
+![Logging pipeline output](screenshots/3-2.png)
 
 **Caption:** `sudo ./engine start log-test ../rootfs-alpha 0 /bin/ls` launches a container that runs `/bin/ls` inside the Alpine rootfs. Its stdout is captured through the pipe → producer thread → bounded buffer → consumer thread → log file pipeline. `sudo ./engine logs log-test` reads back the captured output (`bin`, `dev`, `etc`, `home`, `lib`, `memory_hog`, `proc`, etc.), proving the logging pipeline works end-to-end.
 
@@ -256,7 +256,7 @@ make clean
 ### Screenshot 5 — Soft-limit warning + Hard-limit enforcement
 
 ![Memory limits dmesg](screenshots/5.png)
-(screenshots/6.png)
+![Scheduling Experiment](screenshots/6.png)
 
 **Caption:** `dmesg` output from the kernel monitor's 1-second timer callback. `[Monitor] Registered PID 23628 soft=20480KB hard=40960KB` confirms registration. The **SOFT LIMIT** line shows `PID 23628 RSS=25152KB > soft=20480KB — WARNING` when `memory_hog` exceeded 20 MB — the container continues running. Seconds later, the **HARD LIMIT** line (highlighted red) shows `PID 23628 RSS=41520KB > hard=40960KB — KILLING`, sending `SIGKILL` and terminating the container immediately.
 
