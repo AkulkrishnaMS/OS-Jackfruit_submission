@@ -254,8 +254,8 @@ make clean
 
 ### Screenshot 5 — Soft-limit warning + Hard-limit enforcement
 
-![Memory limits dmesg](screenshots/5.png)
-![Scheduling Experiment](screenshots/6.png)
+![Memory test start](screenshots/5.png)
+![Memory limits dmesg](screenshots/6.png)
 
 **Caption:** `dmesg` output from the kernel monitor's 1-second timer callback. `[Monitor] Registered PID 23628 soft=20480KB hard=40960KB` confirms registration. The **SOFT LIMIT** line shows `PID 23628 RSS=25152KB > soft=20480KB — WARNING` when `memory_hog` exceeded 20 MB — the container continues running. Seconds later, the **HARD LIMIT** line (highlighted red) shows `PID 23628 RSS=41520KB > hard=40960KB — KILLING`, sending `SIGKILL` and terminating the container immediately.
 
