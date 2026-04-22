@@ -102,7 +102,7 @@ sudo ./engine ps
 sudo ./engine ps
 
 sudo ./engine start log-test ../rootfs-alpha 0 /bin/ls
-
+#4
 # Wait 2 seconds for it to run and finish
 sleep 2
 
@@ -124,11 +124,6 @@ sudo ./engine start ipc-test ../rootfs-gamma 0 /bin/sh -c "echo hello"
 # Daemon receives command via socket, launches container, sends response back
 # Show the response confirms IPC worked
 
-# Stop ipc-test — another CLI command over socket
-sudo ./engine stop alpha
-
-# ps shows state updated — daemon processed the stop command
-sudo ./engine ps
 Terminal 2 — Open a THIRD terminal for dmesg watching
 
 # In Terminal 3 — watch kernel logs LIVEc
@@ -138,15 +133,17 @@ sudo dmesg -w | grep -E "\[Monitor\]"
 # Allocates 8 MB every 500 ms → soft limit (20 MB) hit in ~2.5 s, hard (40 MB) in ~5 s
 sudo ./engine start memtest-real ./rootfs-memtest2 0 /memory_hog 8 500
 
-# Terminal 2 — High priority container (nice = -10)
-cp -a ./rootfs-base ./rootfs-hi
-sudo cp cpu_hog ./rootfs-hi/
-sudo ./engine start high_prio ./rootfs-hi -10 "/cpu_hog 60"
+# 1. Create the folders properly from the home directory source
+cp -a ~/OS-JACKFRUIT/rootfs-alpha ./rootfs-hi
+cp -a ~/OS-JACKFRUIT/rootfs-alpha ./rootfs-lo
 
-# Low priority container (nice = +10)
-cp -a ./rootfs-base ./rootfs-lo
-sudo cp cpu_hog ./rootfs-lo/
-sudo ./engine start low_prio ./rootfs-lo 10 "/cpu_hog 60"
+# 2. Copy the cpu_hog tool into them
+cp cpu_hog ./rootfs-hi/
+cp cpu_hog ./rootfs-lo/
+
+# 3. Now start them
+sudo ./engine start high_prio ./rootfs-hi -10 "./cpu_hog 60"
+sudo ./engine start low_prio ./rootfs-lo 10 "./cpu_hog 60"
 
 # Stop a container
 sudo ./engine stop alpha
@@ -156,15 +153,17 @@ sudo ./engine stop beta
 sudo ./engine stop high_prio
 sudo ./engine stop low_prio
 
-# CPU-bound container (nice=0)
-cp -a ./rootfs-base ./rootfs-cpu
-sudo cp cpu_hog ./rootfs-cpu/
-sudo ./engine start cpu_test ./rootfs-cpu 0 "/cpu_hog 30"
+# 1. Create the folders using the correct path to your home directory
+cp -a ~/OS-JACKFRUIT/rootfs-alpha ./rootfs-cpu
+cp -a ~/OS-JACKFRUIT/rootfs-alpha ./rootfs-io
 
-# I/O-bound container (nice=0)
-cp -a ./rootfs-base ./rootfs-io
-sudo cp io_pulse ./rootfs-io/
-sudo ./engine start io_test ./rootfs-io 0 "/io_pulse 50 100"``
+# 2. Copy the binaries into the new container roots
+cp cpu_hog ./rootfs-cpu/
+cp io_pulse ./rootfs-io/
+
+# 3. Start the tests again
+sudo ./engine start cpu_test ./rootfs-cpu 0 "./cpu_hog 30"
+sudo ./engine start io_test ./rootfs-io 0 "./io_pulse 50 100"
 
 ### Watch kernel memory limit events
 
