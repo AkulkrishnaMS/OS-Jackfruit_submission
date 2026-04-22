@@ -1,4 +1,4 @@
-# OS-Jackfruit: Linux Container Runtime
+# OS-Jackfruit: Linux Container Runtime supported by balaraj
 
 > A lightweight Linux container runtime in C — featuring a long-running supervisor daemon, kernel-space memory enforcement via LKM, bounded-buffer logging, and Linux scheduler experiments.
 
@@ -9,7 +9,7 @@
 | Name | SRN |
 |------|-----|
 | Akulkrishna M S | PES1UG24CS554 |
-| Praveen | PES1UG25CS832 |
+| Praveen Jadhav| PES1UG25CS832 |
 
 ---
 
